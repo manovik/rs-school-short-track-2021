@@ -22,47 +22,49 @@
  * ]
  */
 function minesweeper(matrix) {
-  "use strict";
   const arr = [];
 
-  matrix.forEach(el => {
-    arr.push(Array());
-  })
-  
-  for(let i = 0; i < matrix.length; i++) {
-    for(let j = 0; j < matrix[i].length; j++) {
-      arr[i].push(count(matrix, i, matrix[j], j))
-    }
-  }
+  matrix.forEach(() => {
+    arr.push([]);
+  });
 
-  function count(el, arrIdx, arr, elIdx) {
+  function count(array, arrayIdx, elIdx) {
     let sum = 0;
-    if(arr[arrIdx - 1]) {
-      sum += arr[arrIdx - 1] ? 1 : 0;
+
+    if (array[arrayIdx - 1] && array[arrayIdx - 1][elIdx - 1]) {
+      sum += array[arrayIdx - 1][elIdx - 1] ? 1 : 0;
     }
-    if(arr[arrIdx + 1]) {
-      sum += arr[arrIdx + 1] ? 1 : 0;
+    if (array[arrayIdx - 1] && array[arrayIdx - 1][elIdx]) {
+      sum += array[arrayIdx - 1][elIdx] ? 1 : 0;
     }
-    if(el[elIdx - 1]) {
-      sum += el[elIdx - 1] ? 1 : 0;
+    if (array[arrayIdx - 1] && array[arrayIdx - 1][elIdx + 1]) {
+      sum += array[arrayIdx - 1][elIdx + 1] ? 1 : 0;
     }
-    if(el[elIdx + 1]) {
-      sum += el[elIdx + 1] ? 1 : 0;
+    if (array[arrayIdx + 1] && array[arrayIdx + 1][elIdx - 1]) {
+      sum += array[arrayIdx + 1][elIdx - 1] ? 1 : 0;
+    }
+    if (array[arrayIdx + 1] && array[arrayIdx + 1][elIdx]) {
+      sum += array[arrayIdx + 1][elIdx] ? 1 : 0;
+    }
+    if (array[arrayIdx + 1] && array[arrayIdx + 1][elIdx + 1]) {
+      sum += array[arrayIdx + 1][elIdx + 1] ? 1 : 0;
+    }
+    if (array[arrayIdx][elIdx - 1]) {
+      sum += array[arrayIdx][elIdx - 1] ? 1 : 0;
+    }
+    if (array[arrayIdx][elIdx + 1]) {
+      sum += array[arrayIdx][elIdx + 1] ? 1 : 0;
     }
     return sum;
+  }
+
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      arr[i].push(count(matrix, i, j));
+    }
   }
 
   return arr;
 }
 
-console.log(minesweeper([
- [true, false, false, false],
- [false, true, true, false],
- [false, true, true, false],
- [false, false, false, false]
-]))
-
 module.exports = minesweeper;
-
-// 1 2 1 1
-// 2 2 2 1
